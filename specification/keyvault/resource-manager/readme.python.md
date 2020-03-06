@@ -13,6 +13,7 @@ python:
   package-name: azure-mgmt-keyvault
   clear-output-folder: true
   no-namespace-folders: true
+  add-credential: true
 ```
 
 ### Python multi-api
