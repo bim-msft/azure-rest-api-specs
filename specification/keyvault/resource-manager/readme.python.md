@@ -6,42 +6,50 @@ Use `--python-mode=update` if you already have a setup.py and just want to updat
 
 ``` yaml $(python)
 python-mode: create
-python:
-  azure-arm: true
-  license-header: MICROSOFT_MIT_NO_VERSION
-  payload-flattening-threshold: 2
-  package-name: azure-mgmt-keyvault
-  clear-output-folder: true
-  no-namespace-folders: true
-  add-credential: true
+azure-arm: true
+license-header: MICROSOFT_MIT_NO_VERSION
+payload-flattening-threshold: 2
+package-name: azure-mgmt-keyvault
+no-namespace-folders: true
 ```
 
 ### Python multi-api
 
 Generate all API versions currently shipped for this package
 
-```yaml $(python) && $(multiapi)
+```yaml $(multiapi)
+clear-output-folder: true
 batch:
   - tag: package-2019-09
   - tag: package-2018-02
   - tag: package-2016-10
+  - multiapiscript: true
+```
+
+### Multi-api script
+
+``` yaml $(multiapiscript)
+output-folder: $(python-sdks-folder)/keyvault/azure-mgmt-keyvault/azure/mgmt/keyvault
+clear-output-folder: false
+perform-load: false
 ```
 
 ### Tag: package-2019-09 and python
 
-These settings apply only when `--tag=package-2019-09 --python` is specified on the command line.
+These settings apply only when `--tag=package-2018-02 --python` is specified on the command line.
 
-``` yaml $(tag) == 'package-2019-09' && $(python)
+``` yaml $(tag) == 'package-2019-09'
 python:
   namespace: azure.mgmt.keyvault.v2019_09_01
   output-folder: $(python-sdks-folder)/keyvault/azure-mgmt-keyvault/azure/mgmt/keyvault/v2019_09_01
 ```
 
+
 ### Tag: package-2018-02 and python
 
 These settings apply only when `--tag=package-2018-02 --python` is specified on the command line.
 
-``` yaml $(tag) == 'package-2018-02' && $(python)
+``` yaml $(tag) == 'package-2018-02'
 python:
   namespace: azure.mgmt.keyvault.v2018_02_14
   output-folder: $(python-sdks-folder)/keyvault/azure-mgmt-keyvault/azure/mgmt/keyvault/v2018_02_14
@@ -51,7 +59,7 @@ python:
 
 These settings apply only when `--tag=package-2016-10 --python` is specified on the command line.
 
-``` yaml $(tag) == 'package-2016-10' && $(python)
+``` yaml $(tag) == 'package-2016-10'
 python:
   namespace: azure.mgmt.keyvault.v2016_10_01
   output-folder: $(python-sdks-folder)/keyvault/azure-mgmt-keyvault/azure/mgmt/keyvault/v2016_10_01
